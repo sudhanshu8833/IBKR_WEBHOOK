@@ -1,0 +1,196 @@
+INFO 2023-12-16 11:48:53,946 views 3508 123145453187072 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 11:48:53,975 views 3508 123145453187072 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 47, in place_order
+    figi=figi[data["symbol"]],
+         ~~~~^^^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+INFO 2023-12-16 11:48:53,975 views 3508 123145453187072 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': [None]}
+INFO 2023-12-16 11:50:02,723 views 3540 123145459429376 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 11:50:02,761 views 3540 123145459429376 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 38, in place_order
+    figi=json.load(json_file)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+           ^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+INFO 2023-12-16 11:50:02,761 views 3540 123145459429376 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': [None]}
+INFO 2023-12-16 11:56:06,966 views 3722 123145565986816 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 11:56:08,404 views 3722 123145565986816 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order
+    response, call = self.stub.PostOrder.with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "30049"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30049", grpc_status:3, created_time:"2023-12-16T11:56:08.391405+05:30"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order
+    post_order_response: PostOrderResponse = client.orders.post_order(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper
+    raise RequestError(status_code, details, metadata) from e
+tinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, 'invalid argument')>, '30049', Metadata(tracking_id='7c6a48a04d500577b28256814143de66', ratelimit_limit='300, 300;w=60', ratelimit_remaining=299, ratelimit_reset=52, message='post order error: Nedostatochno zayavok v stakane dlya tikera RTO'))
+
+INFO 2023-12-16 11:56:08,405 views 3722 123145565986816 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'RTO', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': [None]}
+INFO 2023-12-16 11:57:19,259 views 3722 123145565986816 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 11:57:21,110 views 3722 123145565986816 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order
+    response, call = self.stub.PostOrder.with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "30049"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30049", grpc_status:3, created_time:"2023-12-16T11:57:21.108162+05:30"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order
+    post_order_response: PostOrderResponse = client.orders.post_order(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper
+    raise RequestError(status_code, details, metadata) from e
+tinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, 'invalid argument')>, '30049', Metadata(tracking_id='01fe32ccaf7fe8e31af372695a90c6f6', ratelimit_limit='300, 300;w=60', ratelimit_remaining=299, ratelimit_reset=40, message='post order error: Nedostatochno zayavok v stakane dlya tikera JCI'))
+
+INFO 2023-12-16 11:57:21,111 views 3722 123145565986816 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': [None]}
+INFO 2023-12-16 11:57:52,077 views 3777 123145518018560 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 11:57:57,835 views 3777 123145518018560 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order
+    response, call = self.stub.PostOrder.with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "30049"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30049", grpc_status:3, created_time:"2023-12-16T11:57:57.824225+05:30"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order
+    post_order_response: PostOrderResponse = client.orders.post_order(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper
+    raise RequestError(status_code, details, metadata) from e
+tinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, 'invalid argument')>, '30049', Metadata(tracking_id='d3c56bd8039461405df50111e00fbfc3', ratelimit_limit='300, 300;w=60', ratelimit_remaining=298, ratelimit_reset=3, message='post order error: Nedostatochno zayavok v stakane dlya tikera JCI'))
+
+INFO 2023-12-16 11:57:57,843 views 3777 123145518018560 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': ['Traceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order\n    response, call = self.stub.PostOrder.with_call(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call\n    return _end_unary_response_blocking(state, call, True, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking\n    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ngrpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:\n\tstatus = StatusCode.INVALID_ARGUMENT\n\tdetails = "30049"\n\tdebug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30049", grpc_status:3, created_time:"2023-12-16T11:57:57.824225+05:30"}"\n>\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order\n    post_order_response: PostOrderResponse = client.orders.post_order(\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper\n    raise RequestError(status_code, details, metadata) from e\ntinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, \'invalid argument\')>, \'30049\', Metadata(tracking_id=\'d3c56bd8039461405df50111e00fbfc3\', ratelimit_limit=\'300, 300;w=60\', ratelimit_remaining=298, ratelimit_reset=3, message=\'post order error: Nedostatochno zayavok v stakane dlya tikera JCI\'))\n']}
+INFO 2023-12-16 13:33:16,859 views 6315 123145429258240 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 13:33:19,343 views 6315 123145429258240 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order
+    response, call = self.stub.PostOrder.with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "30049"
+	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2023-12-16T13:33:19.326072+05:30", grpc_status:3, grpc_message:"30049"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order
+    post_order_response: PostOrderResponse = client.orders.post_order(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper
+    raise RequestError(status_code, details, metadata) from e
+tinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, 'invalid argument')>, '30049', Metadata(tracking_id='6421c878ff252f312532d0ed8bcc17c9', ratelimit_limit='300, 300;w=60', ratelimit_remaining=299, ratelimit_reset=41, message='post order error: Nedostatochno zayavok v stakane dlya tikera JCI'))
+
+INFO 2023-12-16 13:33:19,345 views 6315 123145429258240 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'JCI', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': ['Traceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order\n    response, call = self.stub.PostOrder.with_call(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call\n    return _end_unary_response_blocking(state, call, True, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking\n    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ngrpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:\n\tstatus = StatusCode.INVALID_ARGUMENT\n\tdetails = "30049"\n\tdebug_error_string = "UNKNOWN:Error received from peer  {created_time:"2023-12-16T13:33:19.326072+05:30", grpc_status:3, grpc_message:"30049"}"\n>\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order\n    post_order_response: PostOrderResponse = client.orders.post_order(\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper\n    raise RequestError(status_code, details, metadata) from e\ntinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, \'invalid argument\')>, \'30049\', Metadata(tracking_id=\'6421c878ff252f312532d0ed8bcc17c9\', ratelimit_limit=\'300, 300;w=60\', ratelimit_remaining=299, ratelimit_reset=41, message=\'post order error: Nedostatochno zayavok v stakane dlya tikera JCI\'))\n']}
+INFO 2023-12-16 13:33:38,411 views 6315 123145429258240 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187'}
+INFO 2023-12-16 13:33:40,031 views 6315 123145429258240 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order
+    response, call = self.stub.PostOrder.with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.INVALID_ARGUMENT
+	details = "30079"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30079", grpc_status:3, created_time:"2023-12-16T13:33:40.028869+05:30"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order
+    post_order_response: PostOrderResponse = client.orders.post_order(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper
+    raise RequestError(status_code, details, metadata) from e
+tinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, 'invalid argument')>, '30079', Metadata(tracking_id='a470a4a524d972987a2daaa0fa212be2', ratelimit_limit='300, 300;w=60', ratelimit_remaining=298, ratelimit_reset=21, message='instrument is not available for trading'))
+
+INFO 2023-12-16 13:33:40,034 views 6315 123145429258240 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'quantity': '1', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '2187', 'Order_id': ['Traceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 23, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/services.py", line 1158, in post_order\n    response, call = self.stub.PostOrder.with_call(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1177, in with_call\n    return _end_unary_response_blocking(state, call, True, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/grpc/_channel.py", line 1003, in _end_unary_response_blocking\n    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ngrpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:\n\tstatus = StatusCode.INVALID_ARGUMENT\n\tdetails = "30079"\n\tdebug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"30079", grpc_status:3, created_time:"2023-12-16T13:33:40.028869+05:30"}"\n>\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 43, in place_order\n    post_order_response: PostOrderResponse = client.orders.post_order(\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/env/lib/python3.11/site-packages/tinkoff/invest/_errors.py", line 41, in wrapper\n    raise RequestError(status_code, details, metadata) from e\ntinkoff.invest.exceptions.RequestError: (<StatusCode.INVALID_ARGUMENT: (3, \'invalid argument\')>, \'30079\', Metadata(tracking_id=\'a470a4a524d972987a2daaa0fa212be2\', ratelimit_limit=\'300, 300;w=60\', ratelimit_remaining=298, ratelimit_reset=21, message=\'instrument is not available for trading\'))\n']}
+INFO 2023-12-21 00:20:42,276 views 70058 123145339105280 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'trade': '10', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '161'}
+INFO 2023-12-21 00:20:42,277 views 70058 123145339105280 <class 'dict'>
+INFO 2023-12-21 00:20:50,166 views 70058 123145339105280 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'trade': '10', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '161'}
+INFO 2023-12-21 00:20:50,167 views 70058 123145339105280 <class 'dict'>
+INFO 2023-12-21 00:20:50,172 views 70058 123145339105280 Traceback (most recent call last):
+  File "/Users/sid/Desktop/algo-trading/PROFESSIONAL/PROJECT54_RUSSIAN/datamanagement/views.py", line 96, in tradingview_webhook
+    account_balance=int(client.users.get_margin_attributes(account_id=data["account_id"]).liquid_portfolio.units)
+                        ^^^^^^
+UnboundLocalError: cannot access local variable 'client' where it is not associated with a value
+
+INFO 2023-12-21 00:22:35,593 views 70124 123145535291392 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'trade': '10', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '161'}
+INFO 2023-12-21 00:22:35,594 views 70124 123145535291392 <class 'dict'>
+INFO 2023-12-21 00:22:37,675 views 70124 123145535291392 {'TOKEN': 't.raaqSpKAW7_TdXg0n6nuyKrTNGZ65ORDsOW9uWCH_zJX9KaSRwyT_wuuBZTpyRNe85M7Q8uKqV7UfKV0Dn541A', 'account_id': '2023246994', 'symbol': 'GAZP', 'trade': '10', 'order_type': 'BUY', 'passphrase': ';jfkjadweumxn', 'price': '161', 'Order_id': ["PostOrderResponse(order_id='R210543812', execution_report_status=<OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL: 1>, lots_requested=12, lots_executed=12, initial_order_price=MoneyValue(currency='rub', units=19704, nano=0), executed_order_price=MoneyValue(currency='rub', units=163, nano=699916670), total_order_amount=MoneyValue(currency='rub', units=19643, nano=990000000), initial_commission=MoneyValue(currency='rub', units=9, nano=860000000), executed_commission=MoneyValue(currency='rub', units=0, nano=0), aci_value=MoneyValue(currency='rub', units=0, nano=0), figi='BBG004730RP0', direction=<OrderDirection.ORDER_DIRECTION_BUY: 1>, initial_security_price=MoneyValue(currency='rub', units=164, nano=200000000), order_type=<OrderType.ORDER_TYPE_MARKET: 2>, message='', initial_order_price_pt=Quotation(units=0, nano=0), instrument_uid='962e2a95-02a9-4171-abd7-aa198dbe643a')"], 'quantity': 12}
