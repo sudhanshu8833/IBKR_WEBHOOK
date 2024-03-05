@@ -1,0 +1,156 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © bensch 2014
+
+//@version=5
+
+
+strategy('Allearth strategy 29.12.2023', overlay=true)
+
+length = input(title='ATR Period', defval=22,group = "chandelier buy/sell")
+mult = input.float(title='ATR Multiplier', step=0.1, defval=3.0,group = "chandelier buy/sell")
+showLabels = input(title='Show Buy/Sell Labels ?', defval=true,group = "chandelier buy/sell")
+useClose = input(title='Use Close Price for Extremums ?', defval=true,group = "chandelier buy/sell")
+// highlightState = input(title='Highlight State ?', defval=true)
+
+atr = mult * ta.atr(length)
+
+longStop = (useClose ? ta.highest(close, length) : ta.highest(length)) - atr
+longStopPrev = nz(longStop[1], longStop)
+longStop := close[1] > longStopPrev ? math.max(longStop, longStopPrev) : longStop
+
+shortStop = (useClose ? ta.lowest(close, length) : ta.lowest(length)) + atr
+shortStopPrev = nz(shortStop[1], shortStop)
+shortStop := close[1] < shortStopPrev ? math.min(shortStop, shortStopPrev) : shortStop
+
+var int dir = 1
+dir := close > shortStopPrev ? 1 : close < longStopPrev ? -1 : dir
+
+var color longColor = color.green
+var color shortColor = color.red
+
+longStopPlot = plot(dir == 1 ? longStop : na, title='Long Stop', style=plot.style_linebr, linewidth=2, color=color.new(longColor, 0))
+buySignal = dir == 1 and dir[1] == -1
+plotshape(buySignal ? longStop : na, title='Long Stop Start', location=location.absolute, style=shape.circle, size=size.tiny, color=color.new(longColor, 0))
+plotshape(buySignal and showLabels ? longStop : na, title='Buy Label', text='Buy', location=location.absolute, style=shape.labelup, size=size.tiny, color=color.new(longColor, 0), textcolor=color.new(color.white, 0))
+
+shortStopPlot = plot(dir == 1 ? na : shortStop, title='Short Stop', style=plot.style_linebr, linewidth=2, color=color.new(shortColor, 0))
+sellSignal = dir == -1 and dir[1] == 1
+plotshape(sellSignal ? shortStop : na, title='Short Stop Start', location=location.absolute, style=shape.circle, size=size.tiny, color=color.new(shortColor, 0))
+plotshape(sellSignal and showLabels ? shortStop : na, title='Sell Label', text='Sell', location=location.absolute, style=shape.labeldown, size=size.tiny, color=color.new(shortColor, 0), textcolor=color.new(color.white, 0))
+
+midPricePlot = plot(ohlc4, title='', style=plot.style_circles, linewidth=0, display=display.none, editable=false)
+
+// longFillColor = highlightState ? dir == 1 ? longColor : na : na
+// shortFillColor = highlightState ? dir == -1 ? shortColor : na : na
+// fill(midPricePlot, longStopPlot, title='Long State Filling', color=color.new(longFillColor,90))
+// fill(midPricePlot, shortStopPlot, title='Short State Filling', color=color.new(shortFillColor,90))
+
+changeCond = dir != dir[1]
+// alertcondition(changeCond, title='Alert: CE Direction Change', message='Chandelier Exit has changed direction!')
+// alertcondition(buySignal, title='Alert: CE Buy', message='Chandelier Exit Buy!')
+// alertcondition(sellSignal, title='Alert: CE Sell', message='Chandelier Exit Sell!')
+
+//macd/////////////////////////////////////////////////////////////////////////////////////////
+
+sma = input(12, title='Fast MA',group = "N-MACD SETTINGS")
+lma = input(21, title='Slow MA',group = "N-MACD SETTINGS")
+tsp = input(9, title='Trigger',group = "N-MACD SETTINGS")
+np = input(50, title='Normalize',group = "N-MACD SETTINGS")
+// h = input(true, title='Histogram')
+// docol = input(false, title='Color Change')
+// dofill = input(false, title='Fill')
+type = input.int(1, minval=1, maxval=3, title='1=Ema, 2=Wma, 3=Sma',group = "N-MACD SETTINGS")
+
+ema_1 = ta.ema(close, sma)
+wma_1 = ta.wma(close, sma)
+sma_1 = ta.sma(close, sma)
+sh = type == 1 ? ema_1 : type == 2 ? wma_1 : sma_1
+
+ema_2 = ta.ema(close, lma)
+wma_2 = ta.wma(close, lma)
+sma_2 = ta.sma(close, lma)
+lon = type == 1 ? ema_2 : type == 2 ? wma_2 : sma_2
+
+ratio = math.min(sh, lon) / math.max(sh, lon)
+Mac = (sh > lon ? 2 - ratio : ratio) - 1
+MacNorm = (Mac - ta.lowest(Mac, np)) / (ta.highest(Mac, np) - ta.lowest(Mac, np) + .000001) * 2 - 1
+MacNorm2 = np < 2 ? Mac : MacNorm
+Trigger = ta.wma(MacNorm2, tsp)
+Hist = MacNorm2 - Trigger
+Hist2 = Hist > 1 ? 1 : Hist < -1 ? -1 : Hist
+
+
+///rsi/////////////////////////////////////////////////////////////////////////////////////////
+
+ma(source, length, type) =>
+    switch type
+        "SMA" => ta.sma(source, length)
+        "Bollinger Bands" => ta.sma(source, length)
+        "EMA" => ta.ema(source, length)
+        "SMMA (RMA)" => ta.rma(source, length)
+        "WMA" => ta.wma(source, length)
+        "VWMA" => ta.vwma(source, length)
+
+rsiLengthInput = input.int(14, minval=1, title="RSI Length", group="RSI Settings")
+rsiSourceInput = input.source(close, "Source", group="RSI Settings")
+maTypeInput = input.string("SMA", title="MA Type", options=["SMA", "Bollinger Bands", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group="RSI Settings")
+maLengthInput = input.int(14, title="MA Length", group="RSI Settings")
+bbMultInput = input.float(2.0, minval=0.001, maxval=50, title="BB StdDev", group="RSI Settings")
+
+up = ta.rma(math.max(ta.change(rsiSourceInput), 0), rsiLengthInput)
+down = ta.rma(-math.min(ta.change(rsiSourceInput), 0), rsiLengthInput)
+rsi = down == 0 ? 100 : up == 0 ? 0 : 100 - (100 / (1 + up / down))
+rsiMA = ma(rsi, maLengthInput, maTypeInput)
+isBB = maTypeInput == "Bollinger Bands"
+
+/////strategy rules////////
+optiontpsl = input.string(defval = "TP SL TRAIL, IN %",title = "TP SL TRAIL OPTIONS",options = ["TP SL TRAIL, IN %","TP SL TRAIL, IN $"],group = "TPSL Settings")
+profitper = input.float(defval = 2,title = "Enter Take Profit In %",step = 0.1,group = "TPSL Settings")/100
+lossper = input.float(defval = 2,title = "Enter Stop Loss In %",step = 0.1,group = "TPSL Settings")/100
+trailper = input.float(defval = 1.5,title = "Enter Trail Trigger In %",step = 0.1,group = "TPSL Settings")/100
+trailoffper = input.float(defval = 0.5,title = "Enter Trail Points In %",step = 0.1,group = "TPSL Settings")/100
+
+profitdollar = input.float(defval = 100,title = "Enter Take Profit In $Points",step = 1,group = "TPSL Settings")
+lossdollar = input.float(defval = 100,title = "Enter Stop Loss In $Points",step = 1,group = "TPSL Settings")
+traildollar = input.float(defval = 80,title = "Enter Trail Trigger In $Points",step = 1,group = "TPSL Settings")
+trailoffdollar = input.float(defval = 50,title = "Enter Trail Points In $Points",step = 1,group = "TPSL Settings")
+
+// buy
+macdbuycon = ta.crossover(MacNorm2,Trigger)
+rsibuycon = ta.crossover(rsi,rsiMA)
+chanbuycon = buySignal
+buy = chanbuycon and rsibuycon and macdbuycon
+
+if buy[3] and dir == 1
+    strategy.entry("Long",strategy.long)
+
+if optiontpsl == "TP SL TRAIL, IN %" and strategy.position_size > 0
+    strategy.exit("Long",loss = strategy.opentrades.entry_price(0)*lossper/syminfo.mintick,profit = strategy.opentrades.entry_price(0)*profitper/syminfo.mintick,trail_offset = strategy.opentrades.entry_price(0)*trailper/syminfo.mintick,trail_points = strategy.opentrades.entry_price(0)*trailoffper/syminfo.mintick,comment_profit = "Lg TP hit",comment_loss = "Lg SL hit",comment_trailing = "Lg Trail hit")
+else if optiontpsl == "TP SL TRAIL, IN $" and strategy.position_size > 0
+    strategy.exit("Long",loss = lossdollar/syminfo.mintick,profit = profitdollar/syminfo.mintick,trail_offset = trailoffdollar/syminfo.mintick,trail_points = traildollar/syminfo.mintick,comment_profit = "Lg TP hit",comment_loss = "Lg SL hit",comment_trailing = "Lg Trail hit")
+
+
+// sell
+macdsellcon = ta.crossunder(MacNorm2,Trigger)
+rsisellcon = ta.crossunder(rsi,rsiMA)
+chansellcon = sellSignal
+sell = chansellcon and rsisellcon and macdsellcon
+
+if sell[3] and dir == -1
+    strategy.entry("Short",strategy.short)
+
+if optiontpsl == "TP SL TRAIL, IN %" and strategy.position_size < 0
+    strategy.exit("Short",loss = strategy.opentrades.entry_price(0)*lossper/syminfo.mintick,profit = strategy.opentrades.entry_price(0)*profitper/syminfo.mintick,trail_offset = strategy.opentrades.entry_price(0)*trailper/syminfo.mintick,trail_points = strategy.opentrades.entry_price(0)*trailoffper/syminfo.mintick,comment_profit = "Srt TP hit",comment_loss = "Srt SL hit",comment_trailing = "Srt Trail hit")
+else if optiontpsl == "TP SL TRAIL, IN $" and strategy.position_size < 0
+    strategy.exit("Short",loss = lossdollar/syminfo.mintick,profit = profitdollar/syminfo.mintick,trail_offset = trailoffdollar/syminfo.mintick,trail_points = traildollar/syminfo.mintick,comment_profit = "Srt TP hit",comment_loss = "Srt SL hit",comment_trailing = "Srt Trail hit")
+
+exitonop = input(true,"Exit on Opposite Signal")
+
+if exitonop and chansellcon[3]
+    strategy.close("Long",comment = "Exit at Signal")
+if exitonop and chanbuycon[3]
+    strategy.close("Short",comment = "Exit at Signal")
+
+bgcolor(color = strategy.opentrades > 0 ? color.rgb(0, 187, 212, 61) : na)
+
+//end

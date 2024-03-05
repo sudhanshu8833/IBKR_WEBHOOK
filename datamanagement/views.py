@@ -19,22 +19,33 @@ from datetime import datetime, date
 
 errors=[]
 logger = logging.getLogger('dev_log')
+import random
 
-# ib = IB()
-# ib.connect("127.0.0.1", 7496, clientId=1)
+# Generate a random integer between 1 and 10000
+random_number = random.randint(1, 10000)
+
+ib = IB()
+ib.connect("127.0.0.1", 7496, clientId=1)
 
 def place_order(data):
     global position_opened
 
     try:
-        contract="NA"
-        if data['contract']=="FUTURE":
-            contract=Future(symbol=data['symbol'],lastTradeDateOrContractMonth=data['expiry'],exchange=data['exchange'])
-        if data['contract']=="STOCK":
-            contract=Stock(data['symbol'],data['exchange'],"USD")
-        order = MarketOrder(data['side'].upper(), int(data['quantity']))
-        trade=ib.placeOrder(contract,order)
-        return trade
+        fut=Future(symbol="ES",lastTradeDateOrContractMonth="20241220",exchange="CME")
+
+        order = MarketOrder("BUY", 1)
+        trade = ib.placeOrder(fut, order)
+        return str(trade)
+
+        # contract="NA"
+        # if data['contract']=="FUTURE":
+        #     contract=Future(symbol=data['symbol'],lastTradeDateOrContractMonth=data['expiry'],exchange=data['exchange'])
+        # if data['contract']=="STOCK":
+        #     contract=Stock(data['symbol'],data['exchange'],"USD")
+        # order = MarketOrder(data['side'].upper(), int(data['quantity']))
+        # trade=ib.placeOrder(contract,order)
+        # return {"hello":str(order)}
+
     except Exception:
 
         logger.info(str(traceback.format_exc()))
@@ -49,8 +60,9 @@ def tradingview_webhook(request):
     try:
 
         '''
-        {   "symbol":"ES",
-            "side":"BUY",
+        {   
+            "symbol":"ES",
+            "order_type":"BUY",
             "price":"120",
             "contract":"FUTURE",
             "exchange":"CME",
@@ -62,7 +74,7 @@ def tradingview_webhook(request):
 
         data = json.loads(request.body.decode("utf-8"))
         logger.info(str(data))
-
+        print(data)
         if request.method == "POST":        
             admin=Admin.objects.all()[0]
             passphrase=data['passphrase']
@@ -73,8 +85,7 @@ def tradingview_webhook(request):
                 stock=data['symbol']
                 price=data['price']
 
-                record=positions(symbol=stock,time=datetime.now(),price=price,order_type=data['order_type'])
-                record.save()
+
 
                 # if(admin.status==True):
                 try:
@@ -83,6 +94,7 @@ def tradingview_webhook(request):
                     logger.info(data)
                 except Exception:
                     logger.info(str(traceback.format_exc()))
+                logger.info(str(type(data)))
                 return JsonResponse(data)
 
             else:

@@ -1,0 +1,7 @@
+asgiref==3.7.2
+Django==5.0
+eventkit==1.0.3
+ib-insync==0.9.86
+nest-asyncio==1.5.8
+numpy==1.26.2
+sqlparse==0.4.4
